@@ -1,0 +1,5 @@
+#output{
+    width: 1000px; 
+    height: 20pc; 
+    overflow-y: scroll;
+}
