@@ -4,8 +4,6 @@ from flask_nav.elements import *
 from dominate.tags import img
 from flask import Flask, render_template, Response
 
-
-
 app = Flask(__name__)
 
 def text_export():
@@ -59,6 +57,30 @@ def stream():
                 
 
     return app.response_class(generate(), mimetype='text/plain')
+
+#############################################################
+@app.route('/stream2')
+def stream2():
+    def generate2():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\ratio.csv') as f:
+            while True:
+                yield f.read()
+                
+
+    return app.response_class(generate2(), mimetype='text/plain')
+############################################################
+
+#############################################################
+@app.route('/stream3')
+def stream3():
+    def generate3():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\lenDates.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generate3(), mimetype='text/plain')
+############################################################
+
 ###############################################
 #          Render live page                   #
 ###############################################

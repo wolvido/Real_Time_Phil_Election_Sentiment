@@ -15,22 +15,66 @@
 <html>
     <head>
         <title>Title</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
     </head>
 
     <body>
 
-        
-
-        <ul id="output" style = "width: 1400px; height: 20pc;  overflow-y: scroll;"></ul>
+        <pre id="output" 
+        style = 
+        "width: 1400px; 
+        height: 
+        20pc;  
+        overflow-y: scroll; 
+        overflow-x: auto;
+        white-space: pre-wrap;
+        white-space: -moz-pre-wrap;
+        white-space: -pre-wrap;
+        white-space: -o-pre-wrap;
+        word-wrap: break-word;
+        font-size: 15px;
+        font-family: 'Trebuchet MS', sans-serif;"></pre>
         <p>This is the latest output: <span id="latest"></span></p>
-        
-        <script>
 
-        window.setInterval(function() {
+        <script>
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open('GET', '{{ url_for('stream2') }}');
+            xhr2.send();
+
+            function release(){
+                var messages2 = xhr2.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '0').map(Number);
+                return messages2
+            //direct var xhr only works when it inside a function 
+            // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
+            }
+        </script>
+
+        <script>
+            var xhr3 = new XMLHttpRequest();
+            xhr3.open('GET', '{{ url_for('stream3') }}');
+            xhr3.send();
+
+            function release3(){
+                var messages3 = xhr3.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '');
+                return messages3
+            //direct var xhr only works when it inside a function 
+            // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
+            }
+
+        </script>
+
+
+        <script>
+        //////////---only for scrolling---/////////
+        window.setInterval(function() { //automatically scrolls down the output box//
         var elem = document.getElementById('output');
+
         elem.scrollTop = elem.scrollHeight;
         }, 1000);
+        /////////-------------------------//////
 
+        ///---Script that handles the release of tweets to the output box---///
             var latest = document.getElementById('latest');
             var output = document.getElementById('output');
         
@@ -38,13 +82,14 @@
             xhr.open('GET', '{{ url_for('stream') }}');
             xhr.send();
             var position = 0;
-        
+                    
             function handleNewData() {
                 // the response text include the entire response so far
                 // split the messages, then take the messages that haven't been handled yet
                 // position tracks how many messages have been handled
                 // messages end with a newline, so split will always show one extra empty message at the end
                 var messages = xhr.responseText.split('\n');
+
                 messages.slice(position, -1).forEach(function(value) {
                     latest.textContent = value;  // update the latest value in place
                     // build and append a new item to a list to log all output
@@ -52,20 +97,121 @@
                     item.textContent = value;
                     output.appendChild(item);
                 });
+
                 position = messages.length - 1;
             }
-        
+
             var timer;
             timer = setInterval(function() {
                 // check the response for new data
                 handleNewData();
+                // release();
                 // stop checking once the response has ended
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     clearInterval(timer);
-                    latest.textContent = 'Done';
+                    // latest.textContent = 'Done';
                 }
             }, 1000);
+            
+
+        ///--------------------------------------///
+            </script>
+
+        <!-- <script>
+        const fs = require("fs");
+
+        fs.open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.csv', "r", (err, file) => {
+        if (err) throw err;
+        console.log(file);
+        });
+
+        </script> -->
+
+        <!-- CHART -->
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+        
+        <script>
+
+            const labels = [];
+            const count = [];
+          
+            const data = {
+              labels: labels,
+              datasets: [{
+                label: 'Leni Robredo Percent Positive',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: count,
+              }]
+            };
+          
+            const config = {
+              type: 'line',
+              data: data,
+              options: {}
+            };
         </script>
+        
+        <script>
+            const myChart = new Chart(
+              document.getElementById('myChart'),
+              config
+            );
+
+
+        </script>
+        
+        <script>
+        let add = 10;
+
+        function removeData(chart) {
+            chart.data.labels.pop();
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.pop();
+            });
+            chart.update();
+        }
+                
+        setInterval(function(){ 
+            var testnumber = release();
+            var testdate = release3();
+            console.log(testnumber);
+            console.log(testdate);
+
+            const labels = [];
+            const count = [];
+
+            myChart.config.data = {
+              labels: labels,
+              datasets: [{
+                label: 'Leni Robredo Percent Positive',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: count,
+              }]
+            };
+            myChart.update();
+
+
+            for(i=0;i<testnumber.length;i++){
+                count.push(testnumber[i]);
+            }
+
+            for(i=0;i<testdate.length;i++){
+                labels.push(testdate[i]);
+            }
+
+            // count.push(testnumber);
+            // labels.push("febprilarch");
+            myChart.update();
+        }, 30000);//run this thang every 30 seconds
+        
+        
+        </script>
+        <!-- CHART -->
+
 
     </body>
 </html>

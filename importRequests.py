@@ -5,8 +5,8 @@ import json
 # export 'BEARER_TOKEN'='<your_bearer_token>'
 # for windows $env:BEARER_TOKEN="xxx"
 # $env:BEARER_TOKEN="AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
-
-bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
+bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
+# bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
 
 def bearer_oauth(r):
     """
@@ -58,15 +58,15 @@ def set_rules(delete):
         # {"value": "cat has:images -grumpy"},
         # {"value": "dog has:images"},
 
-        {"value": "(Leni Robredo OR Leni Robredo OR leni robredo OR Robredo OR robredo ) -is:retweet -is:reply -has:links", "tag":"Leni"},
+        {"value": "( #LeniKiko2022 OR Leni Robredo OR leni robredo) -is:retweet -is:reply", "tag":"Leni"},
 
-        {"value": "Bong Bong Marcos -is:retweet -is:reply -has:links", "tag":"Marcos"},
+        {"value": "(#BBMDuwag OR #BBMSara2022 OR #BBMSaraUniteam OR Bong Bong Marcos OR bong bong marcos OR bbm OR BBM) -is:retweet -is:reply", "tag":"Marcos"},
 
-        {"value": "Ping Lacson -is:retweet -is:reply -has:links", "tag":"Lacson"},
+        {"value": "Ping Lacson -is:retweet -is:reply", "tag":"Lacson"},
 
-        {"value": "Manny Pacqiaou -is:retweet -is:reply -has:links", "tag":"Pacqiaou"},
+        {"value": "Manny Pacqiaou -is:retweet -is:reply", "tag":"Pacqiaou"},
 
-        {"value": "Isko Moreno -is:retweet -is:reply -has:links", "tag":"Isko"},
+        {"value": "Isko Moreno -is:retweet -is:reply", "tag":"Isko"},
 
         # {"value": "Leni Robredo -is:retweet -is:reply -has:links"},
         # {"value": "Bong Bong Marcos -is:retweet -is:reply -has:links"},
@@ -104,8 +104,8 @@ def get_stream(set):
     for response_line in response.iter_lines():
         if response_line:
             json_response = json.loads(response_line)
-            print(json.dumps(json_response, indent=4, sort_keys=True))
-
+            # print(json.dumps(json_response, indent=4, sort_keys=True))
+            print(json.dumps((json_response['matching_rules'][0]['tag'])+" Tag: "+(json_response['data']['text']), indent=4, sort_keys=True))
 
 def main():
     rules = get_rules()
