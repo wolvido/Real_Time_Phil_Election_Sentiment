@@ -14,7 +14,7 @@ def text_display():
     with open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.csv', 'r') as f:
         return(f.read())
 
-##################################################
+###############################################
 
 ###############################################
 #          Define flask app                   #
@@ -47,38 +47,80 @@ def get_home():
 def get_news():
     return(render_template('news.html'))
 
-#######################################################
+######################### tweets ###########################
 @app.route('/stream')
 def stream():
     def generate():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.csv') as f:
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\filename.csv') as f:
             while True:
                 yield f.read()
                 
-
     return app.response_class(generate(), mimetype='text/plain')
 
-#############################################################
-@app.route('/stream2')
-def stream2():
-    def generate2():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\ratio.csv') as f:
+########################## leni ############################
+@app.route('/streamLeni')
+def streamLeni():
+    def generateLeni():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\ratio.csv') as f:
             while True:
                 yield f.read()
                 
-
-    return app.response_class(generate2(), mimetype='text/plain')
+    return app.response_class(generateLeni(), mimetype='text/plain')
 ############################################################
 
-#############################################################
-@app.route('/stream3')
-def stream3():
-    def generate3():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\lenDates.csv') as f:
+########################## Marcos ############################
+@app.route('/streamMarcos')
+def streamMarcos():
+    def generateMarcos():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\marcosRatio.csv') as f:
             while True:
                 yield f.read()
                 
-    return app.response_class(generate3(), mimetype='text/plain')
+    return app.response_class(generateMarcos(), mimetype='text/plain')
+############################################################
+
+########################## Isko ############################
+@app.route('/streamIsko')
+def streamIsko():
+    def generateIsko():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\iskoRatio.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generateIsko(), mimetype='text/plain')
+############################################################
+
+########################## Ping ############################
+@app.route('/streamPing')
+def streamPing():
+    def generatePing():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\lacsonRatio.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generatePing(), mimetype='text/plain')
+############################################################
+
+########################## Pacman ############################
+@app.route('/streamPacman')
+def streamPacman():
+    def generatePacman():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\mannyRatio.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generatePacman(), mimetype='text/plain')
+############################################################
+
+###################### date ################################
+@app.route('/streamDate')
+def streamDate():
+    def generateDate():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\lenDates.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generateDate(), mimetype='text/plain')
 ############################################################
 
 ###############################################

@@ -37,33 +37,89 @@
         font-family: 'Trebuchet MS', sans-serif;"></pre>
         <p>This is the latest output: <span id="latest"></span></p>
 
+        <!-- LENI -->
         <script>
-            var xhr2 = new XMLHttpRequest();
-            xhr2.open('GET', '{{ url_for('stream2') }}');
-            xhr2.send();
+            var xhrLeni = new XMLHttpRequest();
+            xhrLeni.open('GET', '{{ url_for('streamLeni') }}');
+            xhrLeni.send();
 
-            function release(){
-                var messages2 = xhr2.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '0').map(Number);
-                return messages2
+            function releaseLeni(){
+                var messages = xhrLeni.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '0').map(Number);
+                return messages
             //direct var xhr only works when it inside a function 
             // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
-            }
+            };
         </script>
-
+        
+        <!-- Narcos -->
         <script>
-            var xhr3 = new XMLHttpRequest();
-            xhr3.open('GET', '{{ url_for('stream3') }}');
-            xhr3.send();
+            var xhrNarc = new XMLHttpRequest();
+            xhrNarc.open('GET', '{{ url_for('streamMarcos') }}');
+            xhrNarc.send();
 
-            function release3(){
-                var messages3 = xhr3.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '');
-                return messages3
+            function releaseNarc(){
+                var messages = xhrNarc.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '0').map(Number);
+                return messages
             //direct var xhr only works when it inside a function 
             // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
-            }
-
+            };
         </script>
 
+        <!-- Isko -->
+        <script>
+            var xhrIsko = new XMLHttpRequest();
+            xhrIsko.open('GET', '{{ url_for('streamIsko') }}');
+            xhrIsko.send();
+
+            function releaseIsko(){
+                var messages = xhrIsko.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '0').map(Number);
+                return messages
+            //direct var xhr only works when it inside a function 
+            // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
+            };
+        </script>   
+
+        <!-- Ping -->
+        <script>
+            var xhrPing = new XMLHttpRequest();
+            xhrPing.open('GET', '{{ url_for('streamPing') }}');
+            xhrPing.send();
+
+            function releasePing(){
+                var messages = xhrPing.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '0').map(Number);
+                return messages
+            //direct var xhr only works when it inside a function 
+            // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
+            };
+        </script>
+
+        <!-- Pacman -->
+        <!-- <script>
+            var xhrPac = new XMLHttpRequest();
+            xhrPac.open('GET', '{{ url_for('streamPacman') }}');
+            xhrPac.send();
+
+            function releasePac(){
+                var messages = xhrPac.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '0').map(Number);
+                return messages
+            //direct var xhr only works when it inside a function 
+            // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
+            };
+        </script> -->
+
+        <!-- Dates -->
+        <script>
+            var xhrDate = new XMLHttpRequest();
+            xhrDate.open('GET', '{{ url_for('streamDate') }}');
+            xhrDate.send();
+
+            function releaseDateLeni(){
+                var messages = xhrDate.responseText.split('\n').filter(v => v !== 'a').filter(v => v !== '');
+                return messages
+            //direct var xhr only works when it inside a function 
+            // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
+            };
+        </script>
 
         <script>
         //////////---only for scrolling---/////////
@@ -109,7 +165,7 @@
                 // stop checking once the response has ended
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     clearInterval(timer);
-                    // latest.textContent = 'Done';
+                    latest.textContent = 'Done';
                 }
             }, 1000);
             
@@ -135,7 +191,11 @@
         <script>
 
             const labels = [];
-            const count = [];
+            const countLeni = [];
+            const countMarcos = [];
+            const countPing = [];
+            const countIsko = [];
+            // const countManny = [];
           
             const data = {
               labels: labels,
@@ -143,14 +203,55 @@
                 label: 'Leni Robredo Percent Positive',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: count,
-              }]
+                data: countLeni,
+              },
+              {
+                label: 'Marcos Percent Positive',
+                backgroundColor: 'rgb(255,0,0)',
+                borderColor: 'rgb(255,0,0)',
+                data: countMarcos,
+              },
+              {
+                label: 'Ping Lacson Percent Positive',
+                backgroundColor: 'rgb(0,0,255)',
+                borderColor: 'rgb(0,0,255)',
+                data: countPing,
+              },
+              {
+                label: 'Isko Moreno Percent Positive',
+                backgroundColor: 'rgb(238,130,238)',
+                borderColor: 'rgb(238,130,238)',
+                data: countIsko,
+              },
+            //   {
+            //     label: 'Manny Pacquiao Percent Positive',
+            //     backgroundColor: 'rgb(255,255,0)',
+            //     borderColor: 'rgb(255,255,0)',
+            //     data: countManny,
+            //   }
+
+            ]
             };
           
             const config = {
               type: 'line',
               data: data,
-              options: {}
+              options: {
+                scales: {
+                        yAxes: {
+                            title: {
+                                display: true,
+                                text: "Percent Positive",
+                                font: {
+                                    size: 15
+                                }
+                            },
+                            ticks: {
+                                precision: 0
+                            }
+                        }     
+                    }
+                }
             };
         </script>
         
@@ -165,48 +266,90 @@
         
         <script>
         let add = 10;
-
-        function removeData(chart) {
-            chart.data.labels.pop();
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data.pop();
-            });
-            chart.update();
-        }
                 
         setInterval(function(){ 
-            var testnumber = release();
-            var testdate = release3();
-            console.log(testnumber);
-            console.log(testdate);
+            var ratioLeni = releaseLeni();
+            var ratioMarcos = releaseNarc();
+            var ratioIsko = releaseIsko();
+            var ratioPing = releasePing();
+            // var ratioPac = releasePac();
+
+            var chartDate = releaseDateLeni();
+            console.log(ratioLeni);
+            console.log(ratioMarcos);
+            console.log(chartDate);
 
             const labels = [];
-            const count = [];
+            const countLeni = [];
+            const countMarcos = [];
+            const countPing = [];
+            const countIsko = [];
+            const countManny = [];
 
             myChart.config.data = {
               labels: labels,
               datasets: [{
-                label: 'Leni Robredo Percent Positive',
+                label: 'Leni Robredo',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: count,
-              }]
+                data: countLeni,
+              },
+              {
+                label: 'Marcos',
+                backgroundColor: 'rgb(255,0,0)',
+                borderColor: 'rgb(255,0,0)',
+                data: countMarcos,
+              },
+              {
+                label: 'Ping Lacson',
+                backgroundColor: 'rgb(0,0,255)',
+                borderColor: 'rgb(0,0,255)',
+                data: countPing,
+              },
+              {
+                label: 'Isko Moreno',
+                backgroundColor: 'rgb(238,130,238)',
+                borderColor: 'rgb(238,130,238)',
+                data: countIsko,
+              },
+            //   {
+            //     label: 'Manny Pacquiao Percent Positive',
+            //     backgroundColor: 'rgb(255,255,0)',
+            //     borderColor: 'rgb(255,255,0)',
+            //     data: countManny,
+            //   }
+            ]
             };
             myChart.update();
 
-
-            for(i=0;i<testnumber.length;i++){
-                count.push(testnumber[i]);
+            for(i=0;i<ratioLeni.length;i++){
+                countLeni.push(ratioLeni[i]);
             }
 
-            for(i=0;i<testdate.length;i++){
-                labels.push(testdate[i]);
+            for(i=0;i<ratioMarcos.length;i++){
+                countMarcos.push(ratioMarcos[i]);
+            }
+
+            for(i=0;i<ratioIsko.length;i++){
+                countIsko.push(ratioIsko[i]);
+            }
+
+            for(i=0;i<ratioPing.length;i++){
+                countPing.push(ratioPing[i]);
+            }
+
+            // for(i=0;i<ratioPac.length;i++){
+            //     countManny.push(ratioPac[i]);
+            // }
+
+            for(i=0;i<chartDate.length;i++){
+                labels.push(chartDate[i]);
             }
 
             // count.push(testnumber);
             // labels.push("febprilarch");
             myChart.update();
-        }, 30000);//run this thang every 30 seconds
+        }, 10000);//run this thang every 2 seconds
         
         
         </script>

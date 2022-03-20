@@ -10,8 +10,8 @@ from datetime import datetime
 # for windows $env:BEARER_TOKEN="xxx"
 # $env:BEARER_TOKEN="AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
 
-# bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
-bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
+bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
+# bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
 
 def bearer_oauth(r):
     """
@@ -67,11 +67,11 @@ def set_rules(delete):
 
         {"value": "(#BBMForPresident2022 OR #BBMDuwag OR #BBMSara2022 OR #BBMSaraUniteam OR Bong Bong Marcos OR bong bong marcos OR bbm OR BBM) -is:retweet -is:reply -has:links", "tag":"Marcos"},
 
-        {"value": "Ping Lacson -is:retweet -is:reply -has:links", "tag":"Lacson"},
+        {"value": "(Ping Lacson OR #PingLacsonTayo OR #pinglacson) -is:retweet -is:reply -has:links", "tag":"Lacson"},
 
-        {"value": "Manny Pacqiaou -is:retweet -is:reply -has:links", "tag":"Pacqiaou"},
+        {"value": "(Manny Pacquiao OR pacquiao) -is:retweet -is:reply -has:links", "tag":"Pacqiaou"},
 
-        {"value": "Isko Moreno -is:retweet -is:reply -has:links", "tag":"Isko"},
+        {"value": "(#IskoMoreno OR Isko Moreno OR Isko Domagoso Moreno OR #KayIskoPosible OR #SwitchToIsko) -is:retweet -is:reply -has:links", "tag":"Isko"},
 
         # {"value": "Leni Robredo -is:retweet -is:reply -has:links"},
         # {"value": "Bong Bong Marcos -is:retweet -is:reply -has:links"},
@@ -105,11 +105,11 @@ def predict(tweet):
         return(tweet +' : Negative sentiment')
 
 def file_import(text, file): #saves a text in a csv file separated by a nextline, if file doesnt exist; creates one
-    if os.path.isfile(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv'):
-        with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'a') as f: # able to append data to file
+    if os.path.isfile(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv'):
+        with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv', 'a') as f: # able to append data to file
             f.write(text+"\n") 
     else:
-        with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'x') as f:
+        with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv', 'x') as f:
             f.write(text+"\n")
 
 # def text_export():
@@ -117,13 +117,11 @@ def file_import(text, file): #saves a text in a csv file separated by a nextline
 #         return(f.read().splitlines()[-1])
 
 def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
-    if pos > neg:
-        return round(100 -((neg/pos)*100))
-    else:
-        return round((pos/neg)*100)
+    total = pos + neg
+    return round(((pos/total)*100))
 
 def sumCount(file): #sum of all recorded numbers in the file
-    given_file = open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'r')
+    given_file = open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv', 'r')
     lines = given_file.readlines()
     sum = 0
     for line in lines:
@@ -132,24 +130,61 @@ def sumCount(file): #sum of all recorded numbers in the file
                 sum = sum + int(c)
     return sum
 
-def ratioToCsv(posFile,negFile, file, fileDate): #stores the ratio result to a csv to be used by frontend
-    threading.Timer(30.0, ratioToCsv, (posFile,negFile,file,fileDate)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
+def ratioToCsv(posFile,negFile, file): #stores the ratio result to a csv to be used by frontend
+    threading.Timer(30.0, ratioToCsv, (posFile,negFile,file)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
     pos = sumCount(posFile)
     neg = sumCount(negFile)
     posRatio = ratioPos(pos,neg)
     print(posRatio)
     file_import(str(posRatio), file)
+    
+def countTimer():   
+    threading.Timer(30.0, countTimer).start()
     now = datetime.now()
-    file_import(now.strftime("%Y-%m-%d %H:%M:%S"), fileDate)
+    file_import(now.strftime("%Y-%m-%d %H:%M:%S"), 'lenDates')
     
 
 def counter(sentiment): #records the amount of positive and negative sentiment for each candidate to be used for graphs and returns the original sentiment for use
+    ###### leni ########
     if "Positive sentiment" in sentiment and "Leni Tag:" in sentiment:
         file_import('1', 'lenPos')
-        print("plus 1 positive")
-    if "Negative sentiment" in sentiment and "Leni Tag:" in sentiment:
+        print("plus 1 positive leni")
+    elif "Negative sentiment" in sentiment and "Leni Tag:" in sentiment:
         file_import('1', 'lenNeg')
-        print("plus 1 negative")
+        print("plus 1 negative leni")
+
+    ###### marcos ########
+    elif "Positive sentiment" in sentiment and "Marcos Tag:" in sentiment:
+        file_import('1', 'marcosPos')
+        print("plus 1 positive marcos")
+    elif "Negative sentiment" in sentiment and "Marcos Tag:" in sentiment:
+        file_import('1', 'marcosNeg')
+        print("plus 1 negative marcos")
+
+    ###### Isko ########
+    elif "Positive sentiment" in sentiment and "Isko Tag:" in sentiment:
+        file_import('1', 'iskoPos')
+        print("plus 1 positive isko")
+    elif "Negative sentiment" in sentiment and "Isko Tag:" in sentiment:
+        file_import('1', 'iskoNeg')
+        print("plus 1 negative isko")  
+
+    ###### Pacqiaou ########
+    elif "Positive sentiment" in sentiment and "Pacqiaou Tag:" in sentiment:
+        file_import('1', 'pacqiaouPos')
+        print("plus 1 positive pacqiaou")
+    elif "Negative sentiment" in sentiment and "Pacqiaou Tag:" in sentiment:
+        file_import('1', 'pacqiaouNeg')
+        print("plus 1 negative pacqiaou")
+
+    ###### Lacson ########
+    elif "Positive sentiment" in sentiment and "Lacson Tag:" in sentiment:
+        file_import('1', 'lacsonPos')
+        print("plus 1 positive lacson")
+    elif "Negative sentiment" in sentiment and "Lacson Tag:" in sentiment:
+        file_import('1', 'lacsonNeg')
+        print("plus 1 negative lacson")      
+
     else:
         print("Error counter")
 
@@ -159,8 +194,30 @@ def counter(sentiment): #records the amount of positive and negative sentiment f
 posLen = "lenPos"
 negLen = "lenNeg"
 ratioLen = "ratio"
-lenDates = 'lenDates'
-ratioToCsv(posLen,negLen,ratioLen,lenDates)
+################################
+
+######### marcos ratio #########
+posMarcos = "marcosPos"
+negMarcos = "marcosNeg"
+marcosRatio = "marcosRatio"
+################################
+
+######### Isko ratio ###########
+posIsko = "iskoPos"
+negIsko = "iskoNeg"
+iskoRatio = "iskoRatio"
+################################
+
+######### Pacqiaou ratio #######
+posManny = "pacqiaouPos"
+negManny = "pacqiaouNeg"
+ratioManny = "mannyRatio"
+################################
+
+######### Lacson ratio #########
+lacPos = "lacPos"
+lacNeg = "lacNeg"
+laRatio = "lacsonRatio"
 ################################
 
 def get_stream(set):
@@ -180,17 +237,23 @@ def get_stream(set):
             file_import(counter(predict(json.dumps((json_response['matching_rules'][0]['tag'])+" Tag: "+(json_response['data']['text']), indent=4, sort_keys=True))),'filename')
 
 def main():
+    ratioToCsv(posLen,negLen,ratioLen)
+    ratioToCsv(posMarcos,negMarcos,marcosRatio)
+    ratioToCsv(posIsko,negIsko,iskoRatio)
+    ratioToCsv(posManny,negManny,ratioManny)
+    ratioToCsv(lacPos,lacNeg,laRatio)
+    countTimer()
     rules = get_rules()
     delete = delete_all_rules(rules)
     set = set_rules(delete)
     get_stream(set)
+    
 
 if __name__ == "__main__": #means the code will only execute if the module is not imported
-    main()
-
-    # while True:
-    #     try:
-    #         main()
-    #     except:
-    #         print('restarting')
+    # main()
+    while True:
+        try:
+            main()
+        except KeyError:
+            print('restarting')
 

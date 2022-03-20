@@ -171,3 +171,9 @@ import threading
 #             f.write(text+"\n")
 
 # file_import(now.strftime("%Y-%m-%d %H:%M:%S"), 'test')
+
+def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
+    total = pos + neg
+    return round(((pos/total)*100))
+
+print(ratioPos(5,20))
