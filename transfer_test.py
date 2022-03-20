@@ -172,8 +172,27 @@ import threading
 
 # file_import(now.strftime("%Y-%m-%d %H:%M:%S"), 'test')
 
-def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
-    total = pos + neg
-    return round(((pos/total)*100))
+# def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
+#     total = pos + neg
+#     return round(((pos/total)*100))
 
-print(ratioPos(5,20))
+# print(ratioPos(5,20))
+
+
+
+def b(a):
+    return a
+
+
+
+def a():
+    print("apple")
+
+
+print()
+
+# print(threaded(a()))
+
+thread = threading.Thread(target=b("ewer"))
+thread.start()
+thread.join()

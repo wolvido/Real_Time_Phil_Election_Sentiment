@@ -23,7 +23,7 @@ logo = img(src='./static/img/logo.png', height="50", width="100", style="margin-
 topbar = Navbar(logo,
                 View('Home', 'get_home'),
                 View('Percent Positive', 'get_news'),
-                View('Live', 'get_live'),
+                View('Tweet Volume', 'get_live'),
                 # View('Programme', 'get_programme'),
                 # View('Classement', 'get_classement'),
                 # View('Contact', 'get_contact'),
@@ -111,6 +111,56 @@ def streamPacman():
                 
     return app.response_class(generatePacman(), mimetype='text/plain')
 ############################################################
+
+########################## Tweet Volume #########################
+
+########################## leni ############################
+@app.route('/streamLeniVol')
+def streamLeniVol():
+    def generateLeniVol():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\lenSum.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generateLeniVol(), mimetype='text/plain')
+############################################################
+
+########################## Marcos ############################
+@app.route('/streamMarcosVol')
+def streamMarcosVol():
+    def generateMarcosVol():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\marSum.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generateMarcosVol(), mimetype='text/plain')
+############################################################
+
+########################## Isko ############################
+@app.route('/streamIskoVol')
+def streamIskoVol():
+    def generateIskoVol():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\koSum.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generateIskoVol(), mimetype='text/plain')
+############################################################
+
+########################## Pacman ############################
+@app.route('/streamPacmanVol')
+def streamPacmanVol():
+    def generatePacmanVol():
+        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\pacSum.csv') as f:
+            while True:
+                yield f.read()
+                
+    return app.response_class(generatePacmanVol(), mimetype='text/plain')
+############################################################
+
+
+###########################################################
+
 
 ###################### date ################################
 @app.route('/streamDate')

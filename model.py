@@ -10,11 +10,15 @@ nltk.download('stopwords')
 
 import json
 
-with open('C:/Users/Winzyl/Desktop/migrate/fildata/positive-FINAL.json') as f:
+with open('C:/Users/Winzyl/Desktop/migrate/fildata/POSv2.json') as f:
   pos = json.load(f)
 
-with open('C:/Users/Winzyl/Desktop/migrate/fildata/negative-FINAL.json') as f:
+with open('C:/Users/Winzyl/Desktop/migrate/fildata/NEGv2.json') as f:
   neg = json.load(f)
+
+
+
+
 filePath = f"{getcwd()}/../tmp2/"
 
 nltk.data.path.append(filePath)
@@ -104,10 +108,10 @@ all_negative_tweets = neg
 # print(len(all_positive_tweets))
 # print(len(all_negative_tweets))
 
-test_pos = all_positive_tweets[400:]
-train_pos = all_positive_tweets[:400]
-test_neg = all_negative_tweets[800:]
-train_neg = all_negative_tweets[:400]
+test_pos = all_positive_tweets[2400:]
+train_pos = all_positive_tweets[:3000]
+test_neg = all_negative_tweets[2400:]
+train_neg = all_negative_tweets[:3000]
 
 train_x = train_pos + train_neg 
 test_x = test_pos + test_neg

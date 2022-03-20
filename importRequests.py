@@ -5,8 +5,11 @@ import json
 # export 'BEARER_TOKEN'='<your_bearer_token>'
 # for windows $env:BEARER_TOKEN="xxx"
 # $env:BEARER_TOKEN="AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
-# bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
+# bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
+bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
+
+
+
 
 def bearer_oauth(r):
     """
@@ -58,15 +61,15 @@ def set_rules(delete):
         # {"value": "cat has:images -grumpy"},
         # {"value": "dog has:images"},
 
-        {"value": "( #LeniKiko2022 OR Leni Robredo OR leni robredo) -is:retweet -is:reply", "tag":"Leni"},
+        {"value": "(#Kakampink OR #kakampink OR #LeniWanagSaDilim OR #LeniRobredo2022 OR #LeniKiko2022 OR Leni Robredo OR leni robredo) -is:retweet -is:reply -has:links", "tag":"Leni"},
 
-        {"value": "(#BBMDuwag OR #BBMSara2022 OR #BBMSaraUniteam OR Bong Bong Marcos OR bong bong marcos OR bbm OR BBM) -is:retweet -is:reply", "tag":"Marcos"},
+        {"value": "(#BBMForPresident2022 OR #BBMDuwag OR #BBMSara2022 OR #BBMSaraUniteam OR Bong Bong Marcos OR bong bong marcos OR bbm OR BBM) -is:retweet -is:reply -has:links", "tag":"Marcos"},
 
-        {"value": "Ping Lacson -is:retweet -is:reply", "tag":"Lacson"},
+        {"value": "(Ping Lacson OR #PingLacsonTayo OR #pinglacson) -is:retweet -is:reply -has:links", "tag":"Lacson"},
 
-        {"value": "Manny Pacqiaou -is:retweet -is:reply", "tag":"Pacqiaou"},
+        {"value": "(Manny Pacquiao OR pacquiao) -is:retweet -is:reply -has:links", "tag":"Pacqiaou"},
 
-        {"value": "Isko Moreno -is:retweet -is:reply", "tag":"Isko"},
+        {"value": "(#IskoMoreno OR Isko Moreno OR Isko Domagoso Moreno OR #KayIskoPosible OR #SwitchToIsko) -is:retweet -is:reply -has:links", "tag":"Isko"},
 
         # {"value": "Leni Robredo -is:retweet -is:reply -has:links"},
         # {"value": "Bong Bong Marcos -is:retweet -is:reply -has:links"},

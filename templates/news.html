@@ -65,7 +65,7 @@
         </script>   
 
         <!-- Ping -->
-        <script>
+        <!-- <script>
             var xhrPing = new XMLHttpRequest();
             xhrPing.open('GET', '{{ url_for('streamPing') }}');
             xhrPing.send();
@@ -76,10 +76,10 @@
             //direct var xhr only works when it inside a function 
             // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
             };
-        </script>
+        </script> -->
 
         <!-- Pacman -->
-        <!-- <script>
+        <script>
             var xhrPac = new XMLHttpRequest();
             xhrPac.open('GET', '{{ url_for('streamPacman') }}');
             xhrPac.send();
@@ -90,7 +90,7 @@
             //direct var xhr only works when it inside a function 
             // to add all in a list arr.reduce((partialSum, a) => partialSum + a, 0)
             };
-        </script> -->
+        </script>
 
         <!-- Dates -->
         <script>
@@ -126,9 +126,9 @@
             const labels = [];
             const countLeni = [];
             const countMarcos = [];
-            const countPing = [];
+            // const countPing = [];
             const countIsko = [];
-            // const countManny = [];
+            const countManny = [];
           
             const data = {
               labels: labels,
@@ -144,24 +144,24 @@
                 borderColor: 'rgb(255,0,0)',
                 data: countMarcos,
               },
-              {
-                label: 'Ping Lacson Percent Positive',
-                backgroundColor: 'rgb(0,0,255)',
-                borderColor: 'rgb(0,0,255)',
-                data: countPing,
-              },
+            //   {
+            //     label: 'Ping Lacson Percent Positive',
+            //     backgroundColor: 'rgb(0,0,255)',
+            //     borderColor: 'rgb(0,0,255)',
+            //     data: countPing,
+            //   },
               {
                 label: 'Isko Moreno Percent Positive',
                 backgroundColor: 'rgb(238,130,238)',
                 borderColor: 'rgb(238,130,238)',
                 data: countIsko,
               },
-            //   {
-            //     label: 'Manny Pacquiao Percent Positive',
-            //     backgroundColor: 'rgb(255,255,0)',
-            //     borderColor: 'rgb(255,255,0)',
-            //     data: countManny,
-            //   }
+              {
+                label: 'Manny Pacquiao Percent Positive',
+                backgroundColor: 'rgb(255,255,0)',
+                borderColor: 'rgb(255,255,0)',
+                data: countManny,
+              }
 
             ]
             };
@@ -176,7 +176,7 @@
                                 display: true,
                                 text: "Percent Positive",
                                 font: {
-                                    size: 15
+                                    size: 40
                                 }
                             },
                             ticks: {
@@ -204,8 +204,8 @@
             var ratioLeni = releaseLeni();
             var ratioMarcos = releaseNarc();
             var ratioIsko = releaseIsko();
-            var ratioPing = releasePing();
-            // var ratioPac = releasePac();
+            // var ratioPing = releasePing();
+            var ratioPac = releasePac();
 
             var chartDate = releaseDateLeni();
             console.log(ratioLeni);
@@ -215,7 +215,7 @@
             const labels = [];
             const countLeni = [];
             const countMarcos = [];
-            const countPing = [];
+            // const countPing = [];
             const countIsko = [];
             const countManny = [];
 
@@ -233,27 +233,27 @@
                 borderColor: 'rgb(255,0,0)',
                 data: countMarcos,
               },
-              {
-                label: 'Ping Lacson',
-                backgroundColor: 'rgb(0,0,255)',
-                borderColor: 'rgb(0,0,255)',
-                data: countPing,
-              },
+            //   {
+            //     label: 'Ping Lacson',
+            //     backgroundColor: 'rgb(0,0,255)',
+            //     borderColor: 'rgb(0,0,255)',
+            //     data: countPing,
+            //   },
               {
                 label: 'Isko Moreno',
                 backgroundColor: 'rgb(238,130,238)',
                 borderColor: 'rgb(238,130,238)',
                 data: countIsko,
               },
-            //   {
-            //     label: 'Manny Pacquiao Percent Positive',
-            //     backgroundColor: 'rgb(255,255,0)',
-            //     borderColor: 'rgb(255,255,0)',
-            //     data: countManny,
-            //   }
+              {
+                label: 'Manny Pacquiao',
+                backgroundColor: 'rgb(255,255,0)',
+                borderColor: 'rgb(255,255,0)',
+                data: countManny,
+              }
             ]
             };
-            myChart.update();
+            // myChart.update();
 
             for(i=0;i<ratioLeni.length;i++){
                 countLeni.push(ratioLeni[i]);
@@ -267,13 +267,13 @@
                 countIsko.push(ratioIsko[i]);
             }
 
-            for(i=0;i<ratioPing.length;i++){
-                countPing.push(ratioPing[i]);
-            }
-
-            // for(i=0;i<ratioPac.length;i++){
-            //     countManny.push(ratioPac[i]);
+            // for(i=0;i<ratioPing.length;i++){
+            //     countPing.push(ratioPing[i]);
             // }
+
+            for(i=0;i<ratioPac.length;i++){
+                countManny.push(ratioPac[i]);
+            }
 
             for(i=0;i<chartDate.length;i++){
                 labels.push(chartDate[i]);
@@ -282,7 +282,7 @@
             // count.push(testnumber);
             // labels.push("febprilarch");
             myChart.update();
-        }, 10000);//run this thang every 2 seconds
+        }, 5000);//run this thang every 2 seconds
         
         
         </script>
