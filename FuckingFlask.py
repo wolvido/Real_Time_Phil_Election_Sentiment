@@ -22,11 +22,11 @@ def text_display():
 logo = img(src='./static/img/logo.png', height="50", width="100", style="margin-top:-15px")
 topbar = Navbar(logo,
                 View('Home', 'get_home'),
-                View('News', 'get_news'),
+                View('Percent Positive', 'get_news'),
                 View('Live', 'get_live'),
-                View('Programme', 'get_programme'),
-                View('Classement', 'get_classement'),
-                View('Contact', 'get_contact'),
+                # View('Programme', 'get_programme'),
+                # View('Classement', 'get_classement'),
+                # View('Contact', 'get_contact'),
                 )
 
 # registers the "top" menubar
