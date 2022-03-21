@@ -53,7 +53,7 @@ def sumCount(file): #sum of all recorded numbers in the file
 
 
 def ratioToCsv(posFile,negFile, file): #stores the ratio result to a csv to be used by frontend
-    threading.Timer(60.0, ratioToCsv, (posFile,negFile,file)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
+    threading.Timer(1800.0, ratioToCsv, (posFile,negFile,file)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
     pos = sumCount(posFile)
     neg = sumCount(negFile)
     posRatio = ratioPos(pos,neg)
@@ -69,7 +69,7 @@ def file_import(text, file): #saves a text in a csv file separated by a nextline
             f.write(text+"\n")
 
 def tweetCount(posFile,negFile, file): #stores the sum of all tweets result to a csv to be used by frontend
-    threading.Timer(60.0, tweetCount, (posFile,negFile,file)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
+    threading.Timer(1800.0, tweetCount, (posFile,negFile,file)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
     pos = sumCount(posFile)
     neg = sumCount(negFile)
     tweetSum = pos + neg
@@ -78,7 +78,7 @@ def tweetCount(posFile,negFile, file): #stores the sum of all tweets result to a
 
 
 def countTimer():   
-    threading.Timer(60.0, countTimer).start()
+    threading.Timer(1800.0, countTimer).start()
     now = datetime.now()
     file_import(now.strftime("%Y-%m-%d %H:%M"), 'lenDates')
  
