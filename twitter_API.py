@@ -4,6 +4,7 @@ import os
 from model import freqs,theta,predict_tweet
 import threading
 from queue import Queue
+import time
 
 # To set your enviornment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
@@ -106,9 +107,9 @@ def set_rules(delete):
 
         {"value": "(Ping Lacson OR #PingLacsonTayo OR #pinglacson) -is:retweet -is:reply -has:links", "tag":"Lacson"},
 
-        {"value": "(Manny Pacquiao OR pacquiao) -is:retweet -is:reply -has:links", "tag":"Pacqiaou"},
+        {"value": "(Manny Pacquiao OR pacquiao OR senator pacquiao OR manny pacquiao OR Pacquiao) -is:retweet -is:reply -has:links", "tag":"Pacqiaou"},
 
-        {"value": "(#IskoMoreno OR Isko Moreno OR Isko Domagoso Moreno OR #KayIskoPosible OR #SwitchToIsko) -is:retweet -is:reply -has:links", "tag":"Isko"},
+        {"value": "(isko domagoso moreno OR isko moreno OR #IskoMoreno OR Isko Moreno OR Isko Domagoso Moreno OR #KayIskoPosible OR #SwitchToIsko) -is:retweet -is:reply -has:links", "tag":"Isko"},
 
         # {"value": "Leni Robredo -is:retweet -is:reply -has:links"},
         # {"value": "Bong Bong Marcos -is:retweet -is:reply -has:links"},
@@ -213,6 +214,7 @@ if __name__ == "__main__": #means the code will only execute if the module is no
     while True:
         try:
             main()
-        except ChunkedEncodingError:
+        except requests.exceptions.ChunkedEncodingError:
+            time.sleep(60)
             print('restarting')
 
