@@ -2,7 +2,8 @@ from flask_bootstrap import Bootstrap
 from flask_nav import Nav
 from flask_nav.elements import *
 from dominate.tags import img
-from flask import Flask, render_template, Response
+from flask import Flask, render_template_string, render_template
+
 import os
 
 app = Flask(__name__)
@@ -45,7 +46,7 @@ def get_news():
 def stream():
     def generate():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\filename.csv')
+        filename = os.path.join(dirname, 'data/filename.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -57,7 +58,7 @@ def stream():
 def streamLeni():
     def generateLeni():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\ratio.csv')
+        filename = os.path.join(dirname, 'data/ratio.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -70,7 +71,7 @@ def streamLeni():
 def streamMarcos():
     def generateMarcos():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\marcosRatio.csv')
+        filename = os.path.join(dirname, 'data/marcosRatio.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -83,7 +84,7 @@ def streamMarcos():
 def streamIsko():
     def generateIsko():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\iskoRatio.csv')
+        filename = os.path.join(dirname, 'data/iskoRatio.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -96,7 +97,7 @@ def streamIsko():
 def streamPing():
     def generatePing():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\lacsonRatio.csv')
+        filename = os.path.join(dirname, 'data/lacsonRatio.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -109,7 +110,7 @@ def streamPing():
 def streamPacman():
     def generatePacman():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\mannyRatio.csv')
+        filename = os.path.join(dirname, 'data/mannyRatio.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -124,7 +125,7 @@ def streamPacman():
 def streamLeniVol():
     def generateLeniVol():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\lenSum.csv')
+        filename = os.path.join(dirname, 'data/lenSum.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -137,7 +138,7 @@ def streamLeniVol():
 def streamMarcosVol():
     def generateMarcosVol():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\marSum.csv')
+        filename = os.path.join(dirname, 'data/marSum.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -150,7 +151,7 @@ def streamMarcosVol():
 def streamIskoVol():
     def generateIskoVol():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\koSum.csv')
+        filename = os.path.join(dirname, 'data/koSum.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -163,7 +164,7 @@ def streamIskoVol():
 def streamPacmanVol():
     def generatePacmanVol():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\pacSum.csv')
+        filename = os.path.join(dirname, 'data/pacSum.csv')
         with open(filename) as f:
             while True:
                 yield f.read()
@@ -180,7 +181,7 @@ def streamPacmanVol():
 def streamDate():
     def generateDate():
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'data\\lenDates.csv')
+        filename = os.path.join(dirname, 'data/lenDates.csv')
         with open(filename) as f:
             while True:
                 yield f.read()

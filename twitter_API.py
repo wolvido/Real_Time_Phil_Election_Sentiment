@@ -143,7 +143,7 @@ def predict(tweet):
 
 def file_import(text, file): #saves a text in a csv file separated by a nextline, if file doesnt exist; creates one
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, f'data\\{file}.csv')
+    filename = os.path.join(dirname, f'data/{file}.csv')
     if os.path.isfile(filename):
         with open(filename, 'a') as f: # able to append data to file
             f.write(text+"\n") 
@@ -160,7 +160,7 @@ def threaded(func):
 
 def cleanUpdate(): #removes the oldest tweet from the database everytime theres a new tweet
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, f'data\\filename.csv')
+    filename = os.path.join(dirname, f'data/filename.csv')
     with open(filename, 'r+', encoding='utf-8') as clean:
         data = clean.read().splitlines(True)
         clean.truncate(0)

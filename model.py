@@ -11,13 +11,13 @@ nltk.download('stopwords')
 import json
 
 dirnamePos = os.path.dirname(__file__)
-filenamePos = os.path.join(dirnamePos, 'fildata\\POSv2.json')
+filenamePos = os.path.join(dirnamePos, 'fildata/POSv2.json')
 
 with open(filenamePos) as f:
   pos = json.load(f)
 
 dirnameNeg = os.path.dirname(__file__)
-filenameNeg = os.path.join(dirnameNeg, 'fildata\\NEGv2.json')
+filenameNeg = os.path.join(dirnameNeg, 'fildata/NEGv2.json')
 
 with open(filenameNeg) as f:
   neg = json.load(f)
