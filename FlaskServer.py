@@ -3,16 +3,9 @@ from flask_nav import Nav
 from flask_nav.elements import *
 from dominate.tags import img
 from flask import Flask, render_template, Response
+import os
 
 app = Flask(__name__)
-
-def text_export():
-    with open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.csv', 'r') as f:
-        return(f.read().splitlines()[-1])
-
-def text_display():
-    with open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.csv', 'r') as f:
-        return(f.read())
 
 ###############################################
 
@@ -51,7 +44,9 @@ def get_news():
 @app.route('/stream')
 def stream():
     def generate():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\filename.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\filename.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -61,7 +56,9 @@ def stream():
 @app.route('/streamLeni')
 def streamLeni():
     def generateLeni():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\ratio.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\ratio.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -72,7 +69,9 @@ def streamLeni():
 @app.route('/streamMarcos')
 def streamMarcos():
     def generateMarcos():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\marcosRatio.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\marcosRatio.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -83,7 +82,9 @@ def streamMarcos():
 @app.route('/streamIsko')
 def streamIsko():
     def generateIsko():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\iskoRatio.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\iskoRatio.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -94,7 +95,9 @@ def streamIsko():
 @app.route('/streamPing')
 def streamPing():
     def generatePing():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\lacsonRatio.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\lacsonRatio.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -105,7 +108,9 @@ def streamPing():
 @app.route('/streamPacman')
 def streamPacman():
     def generatePacman():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\mannyRatio.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\mannyRatio.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -118,7 +123,9 @@ def streamPacman():
 @app.route('/streamLeniVol')
 def streamLeniVol():
     def generateLeniVol():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\lenSum.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\lenSum.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -129,7 +136,9 @@ def streamLeniVol():
 @app.route('/streamMarcosVol')
 def streamMarcosVol():
     def generateMarcosVol():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\marSum.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\marSum.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -140,7 +149,9 @@ def streamMarcosVol():
 @app.route('/streamIskoVol')
 def streamIskoVol():
     def generateIskoVol():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\koSum.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\koSum.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -151,7 +162,9 @@ def streamIskoVol():
 @app.route('/streamPacmanVol')
 def streamPacmanVol():
     def generatePacmanVol():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\pacSum.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\pacSum.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 
@@ -166,7 +179,9 @@ def streamPacmanVol():
 @app.route('/streamDate')
 def streamDate():
     def generateDate():
-        with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\lenDates.csv') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'data\\lenDates.csv')
+        with open(filename) as f:
             while True:
                 yield f.read()
                 

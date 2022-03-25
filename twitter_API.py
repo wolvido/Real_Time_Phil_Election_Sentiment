@@ -11,8 +11,8 @@ import time
 # for windows $env:BEARER_TOKEN="xxx"
 # $env:BEARER_TOKEN="AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
 
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
-# bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
+# bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
+bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
 
 def counter(sentiment): #records the amount of positive and negative sentiment for each candidate to be used for graphs and returns the original sentiment for use
     ###### leni ########
@@ -142,11 +142,13 @@ def predict(tweet):
         return(tweet +' : Negative sentiment')
 
 def file_import(text, file): #saves a text in a csv file separated by a nextline, if file doesnt exist; creates one
-    if os.path.isfile(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv'):
-        with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv', 'a') as f: # able to append data to file
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, f'data\\{file}.csv')
+    if os.path.isfile(filename):
+        with open(filename, 'a') as f: # able to append data to file
             f.write(text+"\n") 
     else:
-        with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv', 'x') as f:
+        with open(filename, 'x') as f:
             f.write(text+"\n")
 
 def threaded(func):
@@ -157,7 +159,9 @@ def threaded(func):
     return plase
 
 def cleanUpdate(): #removes the oldest tweet from the database everytime theres a new tweet
-    with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\filename.csv', 'r+', encoding='utf-8') as clean:
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, f'data\\filename.csv')
+    with open(filename, 'r+', encoding='utf-8') as clean:
         data = clean.read().splitlines(True)
         clean.truncate(0)
         clean.seek(0)

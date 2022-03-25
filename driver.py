@@ -41,8 +41,11 @@ def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
     return round(((pos/total)*100))
 
 
-def sumCount(file): #sum of all recorded numbers in the file
-    given_file = open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv', 'r')
+def sumCount(file1): #sum of all recorded numbers in the file
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, f'data\\{file1}.csv')
+
+    given_file = open(filename, 'r')
     lines = given_file.readlines()
     sum = 0
     for line in lines:
@@ -53,7 +56,7 @@ def sumCount(file): #sum of all recorded numbers in the file
 
 
 def ratioToCsv(posFile,negFile, file): #stores the ratio result to a csv to be used by frontend
-    threading.Timer(1800.0, ratioToCsv, (posFile,negFile,file)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
+    threading.Timer(1800.0, ratioToCsv, (posFile,negFile,file)).start() #runs code on a separate thread every 1800 sec in order to match frontend update cycle
     pos = sumCount(posFile)
     neg = sumCount(negFile)
     posRatio = ratioPos(pos,neg)
@@ -61,28 +64,28 @@ def ratioToCsv(posFile,negFile, file): #stores the ratio result to a csv to be u
     file_import(str(posRatio), file)
 
 def file_import(text, file): #saves a text in a csv file separated by a nextline, if file doesnt exist; creates one
-    if os.path.isfile(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv'):
-        with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv', 'a') as f: # able to append data to file
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, f'data\\{file}.csv')
+    if os.path.isfile(filename):
+        with open(filename, 'a') as f: # able to append data to file
             f.write(text+"\n") 
     else:
-        with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\{file}.csv', 'x') as f:
+        with open(filename, 'x') as f:
             f.write(text+"\n")
 
 def tweetCount(posFile,negFile, file): #stores the sum of all tweets result to a csv to be used by frontend
-    threading.Timer(1800.0, tweetCount, (posFile,negFile,file)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
+    threading.Timer(1800.0, tweetCount, (posFile,negFile,file)).start() #runs code on a separate thread every 1800 sec in order to match frontend update cycle
     pos = sumCount(posFile)
     neg = sumCount(negFile)
     tweetSum = pos + neg
     print(tweetSum)
     file_import(str(tweetSum), file)
 
-
 def countTimer():   
     threading.Timer(1800.0, countTimer).start()
     now = datetime.now()
     file_import(now.strftime("%Y-%m-%d %H:%M"), 'lenDates')
  
-
 
 def counter(sentiment): #records the amount of positive and negative sentiment for each candidate to be used for graphs and returns the original sentiment for use
     ###### leni ########

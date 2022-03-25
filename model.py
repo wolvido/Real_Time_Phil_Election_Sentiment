@@ -1,5 +1,5 @@
 import nltk
-
+import os
 from os import getcwd
 import numpy as np
 import pandas as pd
@@ -10,13 +10,17 @@ nltk.download('stopwords')
 
 import json
 
-with open('C:/Users/Winzyl/Desktop/migrate/fildata/POSv2.json') as f:
+dirnamePos = os.path.dirname(__file__)
+filenamePos = os.path.join(dirnamePos, 'fildata\\POSv2.json')
+
+with open(filenamePos) as f:
   pos = json.load(f)
 
-with open('C:/Users/Winzyl/Desktop/migrate/fildata/NEGv2.json') as f:
+dirnameNeg = os.path.dirname(__file__)
+filenameNeg = os.path.join(dirnameNeg, 'fildata\\NEGv2.json')
+
+with open(filenameNeg) as f:
   neg = json.load(f)
-
-
 
 
 filePath = f"{getcwd()}/../tmp2/"

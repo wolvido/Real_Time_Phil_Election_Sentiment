@@ -1,204 +1,149 @@
-import os
 import threading
-# def file_import(file):
+from datetime import datetime
+import os
 
-#     if os.path.isfile('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.txt'):
-#         with open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.txt', 'a') as f: # able to append data to file
-#             f.write(file+"\n") 
-#     else:
-#         with open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.txt', 'x') as f:
-#             f.write(file+"\n")
+######### Leni ratio ###########
+posLen = "lenPos"
+negLen = "lenNeg"
+ratioLen = "ratio"
+tweetLen = "lenSum"
+################################
 
-# def text_export():
-#     with open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.txt', 'r') as f:
-#         return(f.read().splitlines()[-1])
+######### marcos ratio #########
+posMarcos = "marcosPos"
+negMarcos = "marcosNeg"
+marcosRatio = "marcosRatio"
+tweetMar = 'marSum'
+################################
 
-# for line in reversed(list(open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.csv'))):
-#     print(line.rstrip())
+######### Isko ratio ###########
+posIsko = "iskoPos"
+negIsko = "iskoNeg"
+iskoRatio = "iskoRatio"
+tweetko = 'koSum'
+################################
 
+######### Pacqiaou ratio #######
+posManny = "pacqiaouPos"
+negManny = "pacqiaouNeg"
+ratioManny = "mannyRatio"
+tweetMan = 'pacSum'
+################################
 
+######### Lacson ratio #########
+lacPos = "lacPos"
+lacNeg = "lacNeg"
+laRatio = "lacsonRatio"
+################################
 
-# with open('filename', 'a') as f: # able to append data to file
-# 	f.write('data') 
-
-# with open('filename', 'r') as f: # able to read data from file ( also is the default mode when opening a file in python)
-
-# with open('filename', 'x') as f: # Creates new file, if it already exists it will cause it to fail
-
-# with open('filename', 't') as f: # opens the file in text mode (also is defualt)
-
-
-# def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
-#     if pos > neg:
-#         return round(100 -((neg/pos)*100))
-#     else:
-#         return round((pos/neg)*100)
-
-
-# print(ratioPos(600,10))
-
-# print(ratioPos(10,600))
-
-
-# # with open('C:\\Users\\Winzyl\\Desktop\\migrate\\posLen.csv', 'r') as f:
-# #     totalLenPos = [list(f.read())]
-# #     print(sum(totalLenPos))
+def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
+    total = pos + neg
+    return round(((pos/total)*100))
 
 
-# # def sumCount(file): #sum of all recorded numbers in a file
-# #     given_file = open(file, 'r')
-# #     lines = given_file.readlines()
-# #     sum = 0
+def sumCount(file1): #sum of all recorded numbers in the file
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, f'data\\{file1}.csv')
 
-# #     for line in lines:
-# #         for c in line:
-# #             if c.isdigit() == True:
-# #                 sum = sum + int(c)
-# #     return sum
-
-# # print(sumCount('C:\\Users\\Winzyl\\Desktop\\migrate\\lenPos.csv'))
-# # print(sumCount('C:\\Users\\Winzyl\\Desktop\\migrate\\lenNeg.csv'))
-
-# # def file_import(text, file):
-# #     if os.path.isfile(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv'):
-# #         with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'a') as f: # able to append data to file
-# #             f.write(text+"\n") 
-# #     else:
-# #         with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'x') as f:
-# #             f.write(text+"\n")
-
-# # file_import("brah",'successFile')
-
-# # def counter(sentiment): #records the amount of positive and negative sentiment for each candidate to be used for graphs and returns the original sentiment for use
-# #     if "Positive sentiment" in sentiment and "Leni Tag:" in sentiment:
-# #         # file_import('1', 'lenPos')
-# #         print("plus 1 positive")
-# #     if "Negative sentiment" in sentiment and "Leni Tag:" in sentiment:
-# #         # file_import('1', 'lenNeg')
-# #         print("plus 1 negative")
-# #     else:
-# #         print("Error counter")
-
-# # counter("Leni Tag: leni robredo negative : Negative sentiment")
-
-# # from datetime import datetime
-# # from threading import Timer
-
-# # def print_periodicaly():
-# #     Timer(5, print_periodicaly).start()
-# #     print("working ertykjghfgdfzghjkkjhgfgkjfhghlikujyhgfglikujyhtgrikujh")
-
-# # print_periodicaly()
-# # while True:
-# #     print("ongoing")
+    given_file = open(filename, 'r')
+    lines = given_file.readlines()
+    sum = 0
+    for line in lines:
+        for c in line:
+            if c.isdigit() == True:
+                sum = sum + int(c)
+    return sum
 
 
-# # def ratioToCsv(posFile,negFile, file): #stores the ratio result to a csv to be used by frontend
-# #     pos = sumCount(posFile)
-# #     neg = sumCount(negFile)
-# #     posRatio = ratioPos(pos,neg)
-# #     print(posRatio)
-# #     file_import(str(posRatio), file)
+def ratioToCsv(posFile,negFile, file): #stores the ratio result to a csv to be used by frontend
+    threading.Timer(1800.0, ratioToCsv, (posFile,negFile,file)).start() #runs code on a separate thread every 1800 sec in order to match frontend update cycle
+    pos = sumCount(posFile)
+    neg = sumCount(negFile)
+    posRatio = ratioPos(pos,neg)
+    print(posRatio)
+    file_import(str(posRatio), file)
 
-# # posFile = 'C:\\Users\\Winzyl\\Desktop\\migrate\\lenPos.csv'
-# # negFile = 'C:\\Users\\Winzyl\\Desktop\\migrate\\lenNeg.csv'
-# # file = 'ratio'
+def file_import(text, file): #saves a text in a csv file separated by a nextline, if file doesnt exist; creates one
+    dirname = os.path.dirname(__file__)
+    filename = os.path.join(dirname, f'data\\{file}.csv')
+    if os.path.isfile(filename):
+        with open(filename, 'a') as f: # able to append data to file
+            f.write(text+"\n") 
+    else:
+        with open(filename, 'x') as f:
+            f.write(text+"\n")
 
-# # ratioToCsv(posFile,negFile,file)
+def tweetCount(posFile,negFile, file): #stores the sum of all tweets result to a csv to be used by frontend
+    threading.Timer(1800.0, tweetCount, (posFile,negFile,file)).start() #runs code on a separate thread every 1800 sec in order to match frontend update cycle
+    pos = sumCount(posFile)
+    neg = sumCount(negFile)
+    tweetSum = pos + neg
+    print(tweetSum)
+    file_import(str(tweetSum), file)
 
-# # import threading
+def countTimer():   
+    threading.Timer(1800.0, countTimer).start()
+    now = datetime.now()
+    file_import(now.strftime("%Y-%m-%d %H:%M"), 'lenDates')
+ 
 
-# # def printit():
-# #   threading.Timer(0.1, printit).start()
-# #   print("Hello, World!")
+def counter(sentiment): #records the amount of positive and negative sentiment for each candidate to be used for graphs and returns the original sentiment for use
+    ###### leni ########
+    if "Positive sentiment" in sentiment and "Leni Tag:" in sentiment:
+        file_import('1', 'lenPos')
+        print("plus 1 positive leni")
+    elif "Negative sentiment" in sentiment and "Leni Tag:" in sentiment:
+        file_import('1', 'lenNeg')
+        print("plus 1 negative leni")
 
+    ###### marcos ########
+    elif "Positive sentiment" in sentiment and "Marcos Tag:" in sentiment:
+        file_import('1', 'marcosPos')
+        print("plus 1 positive marcos")
+    elif "Negative sentiment" in sentiment and "Marcos Tag:" in sentiment:
+        file_import('1', 'marcosNeg')
+        print("plus 1 negative marcos")
 
-# # printit()
+    ###### Isko ########
+    elif "Positive sentiment" in sentiment and "Isko Tag:" in sentiment:
+        file_import('1', 'iskoPos')
+        print("plus 1 positive isko")
+    elif "Negative sentiment" in sentiment and "Isko Tag:" in sentiment:
+        file_import('1', 'iskoNeg')
+        print("plus 1 negative isko")  
 
-# # while True:
-# #     print("vbnbvbshwhdwhwidhiwdihwidh")
-# def file_import(text, file): #saves a text in a csv file separated by a nextline, if file doesnt exist; creates one
-#     if os.path.isfile(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv'):
-#         with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'a') as f: # able to append data to file
-#             f.write(text+"\n") 
-#     else:
-#         with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'x') as f:
-#             f.write(text+"\n")
+    ###### Pacqiaou ########
+    elif "Positive sentiment" in sentiment and "Pacqiaou Tag:" in sentiment:
+        file_import('1', 'pacqiaouPos')
+        print("plus 1 positive pacqiaou")
+    elif "Negative sentiment" in sentiment and "Pacqiaou Tag:" in sentiment:
+        file_import('1', 'pacqiaouNeg')
+        print("plus 1 negative pacqiaou")
 
-# # def text_export():
-# #     with open('C:\\Users\\Winzyl\\Desktop\\migrate\\filename.csv', 'r') as f:
-# #         return(f.read().splitlines()[-1])
+    ###### Lacson ########
+    # elif "Positive sentiment" in sentiment and "Lacson Tag:" in sentiment:
+    #     file_import('1', 'lacsonPos')
+    #     print("plus 1 positive lacson")
+    # elif "Negative sentiment" in sentiment and "Lacson Tag:" in sentiment:
+    #     file_import('1', 'lacsonNeg')
+    #     print("plus 1 negative lacson")      
 
-# def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
-#     if pos > neg:
-#         return round(100 -((neg/pos)*100))
-#     else:
-#         return round((pos/neg)*100)
+    else:
+        print("Error counter")
 
-# def sumCount(file): #sum of all recorded numbers in the file
-#     given_file = open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'r')
-#     lines = given_file.readlines()
-#     sum = 0
-#     for line in lines:
-#         for c in line:
-#             if c.isdigit() == True:
-#                 sum = sum + int(c)
-#     return sum
+    return sentiment
 
-# def ratioToCsv(posFile,negFile, file): #stores the ratio result to a csv to be used by frontend
-#     threading.Timer(30.0, ratioToCsv, (posFile,negFile,file)).start() #runs code on a separate thread every 30 sec in order to match frontend update cycle
-#     pos = sumCount(posFile)
-#     neg = sumCount(negFile)
-#     posRatio = ratioPos(pos,neg)
-#     print(posRatio)
-#     file_import(str(posRatio), file)
+def main():
+    ratioToCsv(posLen,negLen,ratioLen)
+    ratioToCsv(posMarcos,negMarcos,marcosRatio)
+    ratioToCsv(posIsko,negIsko,iskoRatio)
+    ratioToCsv(posManny,negManny,ratioManny)
 
-# posLen = "lenPos"
-# negLen = "lenNeg"
-# ratioLen = "ratio"
-# ratioToCsv(posLen,negLen,ratioLen)
+    tweetCount(posLen,negLen, tweetLen)
+    tweetCount(posMarcos,negMarcos, tweetMar)
+    tweetCount(posIsko,negIsko, tweetko)
+    tweetCount(posManny,negManny, tweetMan)
+    countTimer()
 
-# from datetime import datetime
-# now = datetime.now()
-# print (now.strftime("%Y-%m-%d %H:%M:%S"))
-
-# def file_import(text, file): #saves a text in a csv file separated by a nextline, if file doesnt exist; creates one
-#     if os.path.isfile(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv'):
-#         with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'a') as f: # able to append data to file
-#             f.write(text+"\n") 
-#     else:
-#         with open(f'C:\\Users\\Winzyl\\Desktop\\migrate\\{file}.csv', 'x') as f:
-#             f.write(text+"\n")
-
-# file_import(now.strftime("%Y-%m-%d %H:%M:%S"), 'test')
-
-# def ratioPos(pos,neg): #returns the percentage of pos between the two numbers
-#     total = pos + neg
-#     return round(((pos/total)*100))
-
-# print(ratioPos(5,20))
-
-
-# with open(r'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\filename.csv')  as f:
-#     lines = f.readlines()
-
-# # # Keep lines <= 10 chars long with a list comprehension
-# length = len(lines)
-# print(length)
-
-# # # Do what you like with the lines, e.g. write them out into another file:
-# # with open(r'C:\filtered_list.txt', 'w') as f:
-# #     for line in filtered_lines:
-# #         f.write(line)
-
-th3 = cleanUpdate()
-thread3.start()
-thread3.join()
-
-
-
-with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\testFile.csv', 'r+', encoding='utf-8') as clean:
-    data = clean.read().splitlines(True)
-    clean.truncate(0)
-    clean.seek(0)
-    clean.writelines(data[1:])
+if __name__ == "__main__": #means the code will only execute if the module is not imported
+    main()
