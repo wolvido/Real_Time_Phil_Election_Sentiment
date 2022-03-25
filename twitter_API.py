@@ -11,8 +11,8 @@ import time
 # for windows $env:BEARER_TOKEN="xxx"
 # $env:BEARER_TOKEN="AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
 
-# bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
-bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
+bearer_token = "AAAAAAAAAAAAAAAAAAAAAEoLZwEAAAAAsmwKH7vShh0Prf6J2Qugorw5kuc%3D5kjnuSBFoqigZ420KdVmOrpQkI1aK7ii9BFDP67CHx0S8BsSdl"
+# bearer_token = "AAAAAAAAAAAAAAAAAAAAANWTYgEAAAAA0FRIAvdNbnm8q69lTrOF%2BxXpdm8%3DJrqiRxj96oZ8RFEpb6yVqKYmo4rhzrtPB8nswLJZKf0vAUdzPs"
 
 def counter(sentiment): #records the amount of positive and negative sentiment for each candidate to be used for graphs and returns the original sentiment for use
     ###### leni ########
@@ -101,9 +101,9 @@ def set_rules(delete):
         # {"value": "cat has:images -grumpy"},
         # {"value": "dog has:images"},
 
-        {"value": "(#Kakampink OR #kakampink OR #LeniWanagSaDilim OR #LeniRobredo2022 OR #LeniKiko2022 OR Leni Robredo OR leni robredo) -is:retweet -is:reply -has:links", "tag":"Leni"},
+        {"value": "(#Kakampink OR #kakampink OR #LeniWanagSaDilim OR #LeniRobredo2022 OR #LeniKiko2022 OR #LeniDuwag OR #LeniTangaSaLahat OR #LeniLutang OR #LeniSinungaling OR #PHYellowPinkBlackPropaganda OR #MamaNinyoLutang OR #LenLenLoser OR #AngatBuhayLahat OR #LeniKikoAllTheWay OR #LeniWanagSaDilim OR #LetLeniLead2022  OR #KulayRosasAngBukas  OR  Leni Robredo OR leni robredo) -is:retweet -is:reply -has:links", "tag":"Leni"},
 
-        {"value": "(#BBMForPresident2022 OR #BBMDuwag OR #BBMSara2022 OR #BBMSaraUniteam OR Bong Bong Marcos OR bong bong marcos OR bbm OR BBM) -is:retweet -is:reply -has:links", "tag":"Marcos"},
+        {"value": "(#BBMForPresident2022 OR #BBMDuwag OR #BBMSara2022 OR #BBMSaraUniteam OR Bong Bong Marcos OR bong bong marcos OR #BBMIsMyPresident2022 OR  #bbmsaratandem2022 OR #MarcosMagnanakaw OR #bbmsarauniteam2022 OR bbm OR #MarcosNumber1Sinungaling  OR BBM OR Tallano Bold OR tallano gold) -is:retweet -is:reply -has:links", "tag":"Marcos"},
 
         {"value": "(Ping Lacson OR #PingLacsonTayo OR #pinglacson) -is:retweet -is:reply -has:links", "tag":"Lacson"},
 
@@ -156,6 +156,13 @@ def threaded(func):
     plase =  func
     return plase
 
+def cleanUpdate(): #removes the oldest tweet from the database everytime theres a new tweet
+    with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\filename.csv', 'r+', encoding='utf-8') as clean:
+        data = clean.read().splitlines(True)
+        clean.truncate(0)
+        clean.seek(0)
+        clean.writelines(data[1:])
+
 def get_stream(set):
     response = requests.get(
         "https://api.twitter.com/2/tweets/search/stream", auth=bearer_oauth, stream=True,
@@ -178,6 +185,7 @@ def get_stream(set):
 
             th = file_import(predicted,'filename')
             th2 = counter(predicted)
+            th3 = cleanUpdate()
 
             thread2 = threading.Thread(target=th2)
             thread2.start()
@@ -185,6 +193,10 @@ def get_stream(set):
             thread = threading.Thread(target=th)
             thread.start()
 
+            thread3 = threading.Thread(target=th3)
+            thread3.start()
+           
+            thread3.join()
             t.join()
             thread2.join()
             thread.join()
@@ -215,6 +227,9 @@ if __name__ == "__main__": #means the code will only execute if the module is no
         try:
             main()
         except requests.exceptions.ChunkedEncodingError:
-            time.sleep(60)
+            time.sleep(800)
+            print('restarting')
+        except KeyError:
+            time.sleep(800)
             print('restarting')
 

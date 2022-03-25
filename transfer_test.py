@@ -179,20 +179,26 @@ import threading
 # print(ratioPos(5,20))
 
 
+# with open(r'C:\\Users\\Winzyl\\Desktop\\migrate\\data\\filename.csv')  as f:
+#     lines = f.readlines()
 
-def b(a):
-    return a
+# # # Keep lines <= 10 chars long with a list comprehension
+# length = len(lines)
+# print(length)
+
+# # # Do what you like with the lines, e.g. write them out into another file:
+# # with open(r'C:\filtered_list.txt', 'w') as f:
+# #     for line in filtered_lines:
+# #         f.write(line)
+
+th3 = cleanUpdate()
+thread3.start()
+thread3.join()
 
 
 
-def a():
-    print("apple")
-
-
-print()
-
-# print(threaded(a()))
-
-thread = threading.Thread(target=b("ewer"))
-thread.start()
-thread.join()
+with open('C:\\Users\\Winzyl\\Desktop\\migrate\\data\\testFile.csv', 'r+', encoding='utf-8') as clean:
+    data = clean.read().splitlines(True)
+    clean.truncate(0)
+    clean.seek(0)
+    clean.writelines(data[1:])
